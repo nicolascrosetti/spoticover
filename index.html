@@ -80,6 +80,18 @@
                     <label class="block text-sm font-medium mb-2" for="barHeightSlider">Bar Height (<span id="barHeightValue">75</span>px)</label>
                     <input type="range" id="barHeightSlider" min="40" max="200" value="75" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-400">
                 </div>
+
+                <!-- Logo Visibility -->
+                <div class="mb-6 flex items-center justify-between">
+                    <label class="block text-sm font-medium" for="logoVisibilityToggle">Show Logo</label>
+                    <input type="checkbox" id="logoVisibilityToggle" class="h-5 w-5 text-green-400 rounded focus:ring-green-500 cursor-pointer" checked>
+                </div>
+
+                <!-- Logo Size -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="logoSizeSlider">Logo Size (<span id="logoSizeValue">40</span>px)</label>
+                    <input type="range" id="logoSizeSlider" min="20" max="120" value="40" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-400">
+                </div>
                 
                 <!-- Download Button -->
                 <button id="downloadButton" class="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition duration-300 ease-in-out">
@@ -112,6 +124,9 @@
         const fontSizeValue = document.getElementById('fontSizeValue');
         const barHeightSlider = document.getElementById('barHeightSlider');
         const barHeightValue = document.getElementById('barHeightValue');
+        const logoVisibilityToggle = document.getElementById('logoVisibilityToggle');
+        const logoSizeSlider = document.getElementById('logoSizeSlider');
+        const logoSizeValue = document.getElementById('logoSizeValue');
 
         // Background image (to avoid reloading)
         let backgroundImage = new Image();
@@ -131,6 +146,7 @@
         // --- INITIALIZATION ---
 
         window.onload = () => {
+            updateLogoControlsState();
             drawCanvas(); // Draw initial state
         };
 
@@ -149,6 +165,14 @@
             barHeightValue.textContent = barHeightSlider.value;
             drawCanvas();
         });
+        logoVisibilityToggle.addEventListener('change', () => {
+            updateLogoControlsState();
+            drawCanvas();
+        });
+        logoSizeSlider.addEventListener('input', () => {
+            logoSizeValue.textContent = logoSizeSlider.value;
+            drawCanvas();
+        });
         canvas.addEventListener('pointerdown', startImageDrag);
         canvas.addEventListener('pointermove', handleImageDrag);
         canvas.addEventListener('pointerup', endImageDrag);
@@ -165,6 +189,12 @@
         });
 
         // --- HELPER FUNCTIONS ---
+
+        function updateLogoControlsState() {
+            const shouldShowLogo = logoVisibilityToggle.checked;
+            logoSizeSlider.disabled = !shouldShowLogo;
+            logoSizeSlider.classList.toggle('opacity-50', !shouldShowLogo);
+        }
 
         // Load background image
         function handleImageUpload(e) {
@@ -193,6 +223,8 @@
             const titleColor = titleColorPicker.value;
             const fontSize = fontSizeSlider.value;
             const barHeight = barHeightSlider.value;
+            const logoSize = logoSizeSlider.value;
+            const showLogo = logoVisibilityToggle.checked;
             
             // 1. Clear and draw background
             ctx.fillStyle = '#000000';
@@ -269,16 +301,18 @@
             
             ctx.fillText(title, titleX, titleY, maxWidth);
 
-            // 5. Draw Spotify logo tinted with the bar color
-            const logoSize = 40;
-            const logoPadding = 20;
-            const logoScale = logoSize / spotifyLogoOriginalSize;
-            ctx.save();
-            ctx.translate(logoPadding, logoPadding);
-            ctx.scale(logoScale, logoScale);
-            ctx.fillStyle = barColor;
-            ctx.fill(spotifyLogoPath);
-            ctx.restore();
+            // 5. Draw Spotify logo tinted with the bar color (if enabled)
+            if (showLogo) {
+                const numericLogoSize = parseInt(logoSize, 10);
+                const logoPadding = 20;
+                const logoScale = numericLogoSize / spotifyLogoOriginalSize;
+                ctx.save();
+                ctx.translate(logoPadding, logoPadding);
+                ctx.scale(logoScale, logoScale);
+                ctx.fillStyle = barColor;
+                ctx.fill(spotifyLogoPath);
+                ctx.restore();
+            }
 
             updateCanvasCursor();
         }
