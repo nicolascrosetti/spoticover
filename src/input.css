@@ -1,1 +1,70 @@
 @import "tailwindcss";
+
+/* Style to keep the canvas aspect ratio square */
+@media (min-width: 1024px) {
+    #canvasContainer {
+        max-width: 600px;
+        /* Max size on desktop */
+        max-height: 600px;
+    }
+}
+
+canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    touch-action: none;
+}
+
+/* Smooth summary rotation */
+details>summary {
+    list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] summary~* {
+    animation: sweep .2s ease-in-out;
+}
+
+@keyframes sweep {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+/* Ajuste para que el botón de Pickr se vea bien en tu diseño */
+.pcr-button {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 0.25rem !important;
+    border: 1px solid #4B5563 !important;
+}
+
+.pickr {
+    display: inline-block;
+}
+
+/* Toggle Switch Styles */
+.toggle-checkbox:checked {
+    right: 0;
+    border-color: #4ade80;
+}
+
+.toggle-checkbox:checked+.toggle-label {
+    background-color: #4ade80;
+}
+
+.toggle-checkbox {
+    right: 1.25rem;
+    border-color: #68D391;
+    transition: all 0.3s;
+}

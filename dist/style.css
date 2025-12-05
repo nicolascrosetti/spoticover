@@ -267,9 +267,6 @@
   .inline-block {
     display: inline-block;
   }
-  .table {
-    display: table;
-  }
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
@@ -315,23 +312,14 @@
   .max-w-5xl {
     max-width: var(--container-5xl);
   }
-  .flex-grow {
-    flex-grow: 1;
-  }
   .grow {
     flex-grow: 1;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .list-disc {
     list-style-type: disc;
@@ -574,9 +562,6 @@
   .italic {
     font-style: italic;
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .placeholder-gray-400 {
     &::placeholder {
       color: var(--color-gray-400);
@@ -606,10 +591,6 @@
   }
   .ring-gray-700 {
     --tw-ring-color: var(--color-gray-700);
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
@@ -824,6 +805,58 @@
     }
   }
 }
+@media (min-width: 1024px) {
+  #canvasContainer {
+    max-width: 600px;
+    max-height: 600px;
+  }
+}
+canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  touch-action: none;
+}
+details>summary {
+  list-style: none;
+}
+details>summary::-webkit-details-marker {
+  display: none;
+}
+details[open] summary~* {
+  animation: sweep .2s ease-in-out;
+}
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pcr-button {
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 0.25rem !important;
+  border: 1px solid #4B5563 !important;
+}
+.pickr {
+  display: inline-block;
+}
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #4ade80;
+}
+.toggle-checkbox:checked+.toggle-label {
+  background-color: #4ade80;
+}
+.toggle-checkbox {
+  right: 1.25rem;
+  border-color: #68D391;
+  transition: all 0.3s;
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -973,11 +1006,6 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @property --tw-blur {
   syntax: "*";
   inherits: false;
@@ -1090,7 +1118,6 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-outline-style: solid;
       --tw-blur: initial;
       --tw-brightness: initial;
       --tw-contrast: initial;

@@ -276,7 +276,7 @@ function drawCanvas() {
     ctx.restore();
 
     ctx.fillStyle = titleColor;
-    ctx.font = `bold ${fontSize}px "Inter", sans-serif`;
+    ctx.font = `bold ${fontSize}px "Inter", "Microsoft YaHei", "Noto Sans SC", sans-serif`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
 
